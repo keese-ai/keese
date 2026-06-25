@@ -146,3 +146,6 @@ sbom-*.spdx.json
 /manager
 /token-meter
 /keese-drain
+
+# per-developer Claude account override
+.envrc.local
