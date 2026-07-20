@@ -12,14 +12,14 @@ last_verified: 2026-04-19
 
 # Git Worktree Merging
 
-Agents ship work in a worktree branch; the orchestrator merges back to `main`.
-This file specifies how (`conductor/worktree-merge.sh`).
+Agents ship work in a worktree branch; a merge lands it back to `main`.
 
-> **Part of the Conductor system.** The green gate is `make lint && make test`
-> run *after* rebase onto current `main`; the merge refuses diffs touching
-> protected paths (see [`.claude/rules/07-autonomy.md`](../../.claude/rules/07-autonomy.md)).
-> Wave-level orchestration + drift refresh: [ADR 29](../designs/29-conductor-orchestration.md),
-> [`conductor/README.md`](../../conductor/README.md).
+> **Superseded by koryph (2026-07-20).** `conductor/worktree-merge.sh` no longer
+> exists; `koryph merge <branch>` / `koryph land` own this now, refusing diffs
+> that touch a `protected_paths` entry from `koryph.project.json` and running
+> the `gate` array (`make gate`) after rebase. This doc is retained as historical
+> record — see [`docs/references/koryph-orchestration.md`](koryph-orchestration.md)
+> and [ADR 29](../designs/29-conductor-orchestration.md) for the current mechanism.
 
 ## Merge Command
 

@@ -134,17 +134,15 @@ See the [`plan-management` skill](.claude/skills/plan-management.md).
 
 ## Multi-agent worktree workflow
 
-- Dispatch an agent into an isolated worktree:
-  ```sh
-  conductor/agent-dispatch.sh phase-04 implementer
-  ```
-- Merge back when the agent reports complete:
-  ```sh
-  conductor/worktree-merge.sh agent/phase-04-implementer
-  ```
+Parallel agent dispatch and merge are owned by [koryph](https://koryph.build), not an
+in-repo script:
 
-See [docs/references/agent-dispatch.md](docs/references/agent-dispatch.md) and
-[docs/references/git-worktree-merging.md](docs/references/git-worktree-merging.md).
+- Dispatch one bead into an isolated worktree: `/koryph-build <bead-id>`
+- Run a whole wave of ready beads in parallel: `/koryph-loop`
+- Land a finished branch: `koryph merge <branch>`
+
+See [`AGENTS.md`](AGENTS.md) and
+[docs/references/koryph-orchestration.md](docs/references/koryph-orchestration.md).
 
 ## Model tier selection
 

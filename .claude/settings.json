@@ -3,6 +3,62 @@
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "inherit"
   },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/enforce-spdx-header.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|Write"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-secret-read.sh",
+            "type": "command"
+          },
+          {
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/validate-conventional-commit.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${KORYPH_HOME:-$HOME/.koryph}/hooks/worktree-guard.sh\"",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash|Edit|Write"
+      },
+      {
+        "hooks": [
+          {
+            "command": "\"${KORYPH_HOME:-$HOME/.koryph}/hooks/agent-boundary-guard.sh\"",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "\"${KORYPH_HOME:-$HOME/.koryph}/hooks/koryph-prime.sh\"  # replaces: bd prime --hook-json",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "Read(**)",
@@ -39,8 +95,6 @@
       "Bash(gitleaks *)",
       "Bash(trivy *)",
       "Bash(scripts/*)",
-      "Bash(conductor/*)",
-
       "Bash(operator-sdk *)",
       "Bash(controller-gen *)",
       "Bash(setup-envtest *)",
@@ -85,7 +139,6 @@
       "Bash(tofu plan *)",
       "Bash(tofu validate *)",
       "Bash(conftest *)",
-
       "Bash(*)"
     ],
     "ask": [
@@ -173,17 +226,16 @@
       "Bash(pkill -9 -1*)",
       "Bash(kill -9 -1*)",
       "Bash(kill -KILL -1*)",
-      "Bash(* > /dev/sd*)",
-      "Bash(* > /dev/nvme*)",
-      "Bash(* > /dev/disk*)",
-      "Bash(* > /dev/hd*)",
+      "Bash(* \u003e /dev/sd*)",
+      "Bash(* \u003e /dev/nvme*)",
+      "Bash(* \u003e /dev/disk*)",
+      "Bash(* \u003e /dev/hd*)",
       "Read(.env)",
       "Read(.env.local)",
       "Read(**/*.key)",
       "Read(**/*.pem)",
       "Read(**/kubeconfig)",
       "Read(**/kubeconfig-*)",
-
       "Bash(kubectl * --context=prod-*)",
       "Bash(kubectl * --context=*production*)",
       "Bash(kubectl * --context=*prd*)",
@@ -196,44 +248,12 @@
       "Bash(kind delete clusters)",
       "Bash(tofu destroy *)",
       "Bash(tofu workspace delete *)",
-      "Bash(tofu apply * --context=prod-*)"
-    ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-secret-read.sh"
-          },
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/validate-conventional-commit.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash|Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/conductor/hooks/worktree-guard.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/enforce-spdx-header.sh"
-          }
-        ]
-      }
+      "Bash(tofu apply * --context=prod-*)",
+      "Bash(gh auth*)",
+      "Bash(gh secret*)",
+      "Bash(sudo*)",
+      "Bash(rm -rf ~*)",
+      "Read(.env.*)"
     ]
   }
 }

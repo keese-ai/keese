@@ -105,6 +105,19 @@ func (r *WorkspaceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
   default.
 - Table-driven tests use fakes under `internal/controller/fake/`.
 
+## Debugging reconcilers
+
+- **Stuck in reconcile loop?** Dump status + events (`kubectl describe`), grab the last
+  ~100 lines of manager logs with `stern -n <ns> <pod>`. Check for a missing finalizer,
+  missing RBAC, or infinite requeue (always `Requeue: true`).
+- **Envtest stuck on bring-up?** Confirm `KUBEBUILDER_ASSETS` points at a real install
+  (`setup-envtest use 1.30.x`); check for stale etcd files in `/tmp/k8s-*`; retry once.
+- **Flaky kuttl e2e?** Report the kind-keese pod that crashed, attach its events +
+  prior-logs via `kubectl logs -p`. Do not silence with retries.
+- **Goose runtime not responding?** ACP is stdio — check the pod's stderr via
+  `kubectl logs`, not a port-forward. Session state is at
+  `/var/lib/goose/sessions/sessions.db` in the workspace PVC.
+
 ## Checklist before commit
 
 1. `make fmt vet lint test-unit test-integration` green.
