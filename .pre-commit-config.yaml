@@ -58,6 +58,8 @@ repos:
     hooks:
       - id: markdownlint
         args: ["--config", ".markdownlint.json"]
+        # koryph/bd install these; not authored here, not ours to restyle.
+        exclude: ^(\.claude/(agents|commands)/koryph-.*\.md|\.beads/.*\.md)$
 
   # ==================== Diagram freshness ====================
   # Re-renders every committed diagram source and blocks commits where the
@@ -128,6 +130,9 @@ repos:
           - "Makefile.operator-sdk-generated"
           - "-ignore"
           - ".secrets.baseline"
+          # ==== bd (beads) — installed/managed by the bd CLI, not ours ====
+          - "-ignore"
+          - ".beads/**"
 
   # ==================== Commit message (Conventional Commits) ====================
   - repo: https://github.com/commitizen-tools/commitizen

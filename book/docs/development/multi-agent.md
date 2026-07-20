@@ -11,7 +11,7 @@ longer runs its own dispatch/merge scripts for this.
     Keese contributors and operators who want to parallelize agent-driven development work.
     **Prerequisites:** `koryph` and `bd` on `PATH`; a working clone of the keese repo,
     registered once via `koryph project add` (see
-    [`docs/references/koryph-orchestration.md`](https://github.com/keese-ai/keese/blob/main/docs/references/koryph-orchestration.md)).
+    [`koryph-orchestration.md`](../../../docs/references/koryph-orchestration.md) for details).
 
 ## Why worktrees, still
 
@@ -80,7 +80,7 @@ The full list is `koryph.project.json`'s `protected_paths` (`CLAUDE.md`, `AGENTS
 `.claude/rules/`, `.claude/agents/`, `.beads/`, `flake.nix`, …). Claude Code additionally
 enforces these **pre-execution** via hooks installed at `koryph project add` time
 (`${KORYPH_HOME}/hooks/worktree-guard.sh`, `agent-boundary-guard.sh`) — see
-[AGENTS.md](https://github.com/keese-ai/keese/blob/main/AGENTS.md) "Containment model".
+[AGENTS.md](../../../AGENTS.md) "Containment model".
 Runtimes without hook support fall back to merge-time refusal only.
 
 ## Observability
@@ -94,9 +94,8 @@ koryph tail --project keese <id> --follow
 
 ## See also
 
-- [`AGENTS.md`](https://github.com/keese-ai/keese/blob/main/AGENTS.md) — the full
-  runtime-neutral operating contract
-- [`docs/references/koryph-orchestration.md`](https://github.com/keese-ai/keese/blob/main/docs/references/koryph-orchestration.md) —
+- [`AGENTS.md`](../../../AGENTS.md) — the full runtime-neutral operating contract
+- [`koryph-orchestration.md`](../../../docs/references/koryph-orchestration.md) —
   what this repo owns vs. what koryph owns
 - [Repository map](repo-map.md) — where agents find source, tests, and configs
 - [SDLC & the design gate](sdlc.md) — how work gates on design + spec scores
