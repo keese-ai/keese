@@ -23,8 +23,9 @@ or specs (what), references tell you **how** to do a recurring operation.
 | Diagram authoring (D2 / Mermaid / Graphviz) | [diagram-authoring.md](diagram-authoring.md) |
 | Conventional Commits rules and tooling | [conventional-commits.md](conventional-commits.md) |
 | Nix dev environment | [nix-dev-env.md](nix-dev-env.md) |
-| Agent dispatch (multi-agent worktree flow) | [agent-dispatch.md](agent-dispatch.md) |
-| Git worktree merging | [git-worktree-merging.md](git-worktree-merging.md) |
+| Agent dispatch (multi-agent worktree flow, historical — superseded by koryph) | [agent-dispatch.md](agent-dispatch.md) |
+| Git worktree merging (historical — superseded by koryph) | [git-worktree-merging.md](git-worktree-merging.md) |
+| koryph orchestration (what this repo owns vs. what koryph owns) | [koryph-orchestration.md](koryph-orchestration.md) |
 | Model selection for subagents | [model-selection.md](model-selection.md) |
 | End-to-end kind smoke harness | [e2e-smoke.md](e2e-smoke.md) |
 | Rotate a running CSV to a CI-signed bundle | [csv-rotate-to-signed-bundle.md](csv-rotate-to-signed-bundle.md) |

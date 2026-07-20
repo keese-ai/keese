@@ -21,6 +21,8 @@ Keep Claude context lean. Token cost and cache hit rate both matter.
    when the first doc doesn't answer the question.
 4. Never load all phases, all designs, or all specs at once. They are independently
    loadable by design.
+5. Exploratory searches scope to `api/`, `internal/`, `config/`, `docs/`, `deploy/`, `dev/`.
+   Skip `bundle/` (generator output) unless specifically asked about it.
 
 ## Prompt caching
 

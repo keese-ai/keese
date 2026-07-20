@@ -176,12 +176,16 @@ sigterm-drain-test:  ## SIGTERM drain contract for each long-running cmd/** pod 
 .PHONY: test
 test: test-unit test-integration  ## Composed: unit + integration
 
-.PHONY: conductor-test
-conductor-test:  ## Conductor orchestrator unit tests (scheduler/parity/registry; needs bash>=4)
-	@bash conductor/tests/run.sh
-
 .PHONY: verify
 verify: fmt vet lint test coverage-check bundle-validate  ## fmt+vet+lint+test+coverage-check+bundle-validate aggregator
+
+.PHONY: gate
+gate: verify  ## The koryph merge gate: verify + design-gate (hard fail, unlike `design-gate`)
+	@bash $(SCRIPTS_DIR)/check-design-gate.sh
+
+.PHONY: gate-agent
+gate-agent:  ## Quiet gate: one PASS/FAIL line per stage; full logs under .plan-logs/gate/ (see AGENTS.md)
+	@$(SCRIPTS_DIR)/gate-agent.sh
 
 # ==== Manifest + bundle generation (delegated) ==========================
 

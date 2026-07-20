@@ -15,6 +15,14 @@ last_verified: 2026-06-08
 
 # Autonomous parallel phase orchestration (Conductor)
 
+> **Superseded.** As of 2026-07-20 the `conductor/` implementation described below has been
+> removed in favor of [koryph](https://koryph.build), an external orchestrator that solves
+> the same problem set (wave scheduling, worktree isolation, budget/quota governance,
+> protected-path-gated merge). This doc remains as historical record of the requirements and
+> design that motivated it — see
+> [`docs/references/koryph-orchestration.md`](../references/koryph-orchestration.md) and
+> [`AGENTS.md`](../../AGENTS.md) for the current mechanism.
+
 ## Question
 
 keese can dispatch **one** agent into **one** worktree
