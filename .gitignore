@@ -155,3 +155,4 @@ sbom-*.spdx.json
 *.db
 .beads-credential-key
 .beads/proxieddb/
+.koryph/snapshots/
