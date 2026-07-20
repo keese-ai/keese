@@ -12,11 +12,11 @@ last_verified: 2026-04-19
 
 # Multi-Agent Dispatch
 
-> **Now part of the Conductor system.** This doc is the single-phase dispatch
-> contract (`conductor/agent-dispatch.sh`). To drive *many* phases in parallel
-> as recoverable, budget-aware waves, use the `/conduct` command and the
-> `conductor/` orchestrator — see [ADR 29](../designs/29-conductor-orchestration.md)
-> and [`conductor/README.md`](../../conductor/README.md).
+> **Superseded by koryph (2026-07-20).** The `conductor/agent-dispatch.sh` contract
+> described below no longer exists; single-bead dispatch is now `/koryph-build`
+> and whole-wave dispatch is `/koryph-loop`. This doc is retained as historical
+> record — see [`docs/references/koryph-orchestration.md`](koryph-orchestration.md)
+> and [ADR 29](../designs/29-conductor-orchestration.md) for the current mechanism.
 
 ## Motivation
 

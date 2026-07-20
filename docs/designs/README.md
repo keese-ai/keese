@@ -93,7 +93,7 @@ and API code now lands on `main`.
 | 28 | [28-rag-ingestion.md](28-rag-ingestion.md) | RAG Ingestion | rag | current |
 | 28b | [28b-rag-backends.md](28b-rag-backends.md) | RAG Backends (Qdrant / Elasticsearch / pgvector) | rag | current |
 | 28c | [28c-rag-pipeline.md](28c-rag-pipeline.md) | RAG Pipeline + Retrieval Contract | rag | current |
-| 29 | [29-conductor-orchestration.md](29-conductor-orchestration.md) | Autonomous parallel phase orchestration (Conductor) | orchestration | draft |
+| 29 | [29-conductor-orchestration.md](29-conductor-orchestration.md) | Autonomous parallel phase orchestration (Conductor) — superseded by koryph | orchestration | draft |
 | 30 | [30-token-metering-pipeline.md](30-token-metering-pipeline.md) | Token-cost metering pipeline (EH7) | observability | draft |
 | 30-ii | [30-ii-iter-log.md](30-ii-iter-log.md) | Token-cost metering pipeline: Iteration Log | observability | draft |
 

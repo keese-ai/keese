@@ -57,22 +57,22 @@ Goal: keep this file small and stable so prompt caching stays warm across sessio
 
 | Task area | Load first | Then if needed | Skill / Agent |
 |---|---|---|---|
-| Write or modify a design doc | `docs/designs/README.md` | `docs/designs/NN-*.md` | `doc-authoring` · agent `architect` |
-| Write or modify a spec | `docs/specs/README.md` | related spec + owning design | `doc-authoring` · agent `architect` |
+| Write or modify a design doc | `docs/designs/README.md` | `docs/designs/NN-*.md` | `doc-authoring` · agent `koryph-architect` |
+| Write or modify a spec | `docs/specs/README.md` | related spec + owning design | `doc-authoring` · agent `koryph-architect` |
 | Document an implemented feature | `docs/features/README.md` | related spec + source files | `doc-authoring` |
 | Author or update a diagram | `docs/references/diagram-authoring.md` | depicted source files | `diagram-authoring` |
 | Create or update a plan phase | `docs/plans/README.md` + `docs/plans/rubric.md` | the phase doc | `plan-management` |
 | Edit a Makefile or recipe script | `.claude/skills/makefile-authoring.md` | `scripts/lib/{log,signals}.sh` | `makefile-authoring` |
-| Run the parallel build (conduct a wave) | `docs/designs/29-conductor-orchestration.md` | `conductor/README.md` + `conductor/scheduler.sh` | `/conduct` · `/workflows` |
-| Multi-agent worktree (single phase) | `docs/references/agent-dispatch.md` | `conductor/agent-dispatch.sh` | `agent-dispatch` |
-| Auto-merge subagent work | `docs/references/git-worktree-merging.md` | `conductor/worktree-merge.sh` | `worktree-merge` |
+| Run the parallel build (a wave of ready beads) | `AGENTS.md` | `koryph.project.json`; `koryph --help` | `/koryph-loop` |
+| Dispatch a single bead | `AGENTS.md` | `bd ready` / `bd show <id>` | `/koryph-build` |
+| Land a finished branch | `docs/references/koryph-orchestration.md` | `koryph merge` / `koryph land` | — |
 | Create a new CRD | `docs/references/crd-design-checklist.md` | `docs/designs/20-api-group-layout.md` + owning design | `crd-authoring` · agent `crd-author` · `/gen-crd` |
 | Implement a reconciler | `docs/references/envtest-kuttl-harness.md` | owning spec in `docs/specs/` (e.g. `keese.ai-v1alpha1-<kind>.md`, `authz.keese.ai-v1alpha1.md`, `policy.keese.ai-v1alpha1.md`) | `controller-authoring` · agent `controller-author` |
 | Edit an admission webhook | `.claude/rules/04-kubernetes.md` | owning spec | `controller-authoring` |
 | Author/update OLM bundle | `docs/references/olm-bundle-authoring.md` | `docs/designs/14a-olm-channels-upgrades.md` + `14b-olm-dependencies.md` | agent `olm-author` · `/validate-bundle` |
 | Bootstrap local kind + infra | `docs/references/tilt-local-loop.md` | `dev/bootstrap/README.md` | agent `infra-bootstrap` |
 | Backup / DR (OpenBao, OpenFGA, NATS) | `docs/references/backup-and-dr.md` | component runbooks in same dir | agent `infra-bootstrap` |
-| End-to-end smoke (kind) | `docs/references/e2e-smoke.md` | `scripts/dev/e2e-smoke.sh` | agent `test-engineer` |
+| End-to-end smoke (kind) | `docs/references/e2e-smoke.md` | `scripts/dev/e2e-smoke.sh` | agent `koryph-test-engineer` |
 | Add/revise a guardrail binding | `docs/designs/06-guardrailbinding.md` | `docs/specs/authz.keese.ai-v1alpha1-guardrail.md` | agent `guardrail-author` |
 | Change OpenFGA auth model | `docs/designs/04a-openfga-authz-model.md` | `docs/specs/egress-authz-protocol.md` | agent `rebac-modeler` |
 | Add an AgentRuntime provider | `docs/designs/07-agent-runtime-spi.md` | `docs/specs/agent-runtime-spi.md` | `doc-authoring` then `controller-authoring` |
@@ -81,10 +81,10 @@ Goal: keep this file small and stable so prompt caching stays warm across sessio
 | Write a goose recipe / extension | `docs/designs/08a-goose-headless-modes.md` + `08c-goose-subagents-limits.md` | `dev/samples/recipes/` | `doc-authoring` |
 | Cloud deploy (OpenTofu) | `docs/references/opentofu-cloud-deployment.md` | `deploy/opentofu/README.md` | agent `infra-bootstrap` |
 | IDE setup (debug attach, ACP) | `docs/references/ide-and-debugging.md` | `dev/ide/{goland,vscode}/` | — |
-| Open / close the design gate | `docs/plans/README.md` | `scripts/check-design-gate.sh` | `plan-management` · agent `architect` |
-| Score a plan / design / spec | `docs/plans/rubric.md` | target doc | `plan-management` · agent `plan-scorer` |
+| Open / close the design gate | `docs/plans/README.md` | `scripts/check-design-gate.sh` | `plan-management` · agent `koryph-architect` |
+| Score a plan / design / spec | `docs/plans/rubric.md` | target doc | `plan-management` · agent `koryph-plan-scorer` |
 | Commit or push | `.claude/rules/01-conventions.md` | `docs/references/conventional-commits.md` | (hook-enforced) |
-| Write or run tests | `.claude/rules/06-testing.md` | test harness refs | agent `test-engineer` |
+| Write or run tests | `.claude/rules/06-testing.md` | test harness refs | agent `koryph-test-engineer` |
 | Toggle a keese capability via FeatureGate | `docs/designs/27-feature-gates-openfeature.md` | `docs/designs/27b-feature-gate-catalog.md` + `internal/featuregate/` | `controller-authoring` |
 
 ## Loading strategy
@@ -111,12 +111,14 @@ Goal: keep this file small and stable so prompt caching stays warm across sessio
   all 62 designs + 27 specs scored ≥ 90. Pre-gate the rule blocked non-stub bodies in
   `internal/controller/` and `api/`; post-gate, `scripts/check-design-gate.sh` enforces
   only designs-before-specs and the verified gate-open commit.
+- **Locked architecture decisions.** D1-D29 in `docs/plans/scaffolding-plan.md` aren't
+  re-litigated without a migration plan entry in `docs/plans/migration-<slug>.md`.
 - **Server-Side Apply** with `fieldOwner = keese-<kind>-controller` for every
   controller write (rule 04.7).
-- **Multi-agent**: drive the parallel phase build from chat with the `/conduct`
-  command (the `conductor/` wave orchestrator, [ADR 29](docs/designs/29-conductor-orchestration.md));
-  single worktrees via `conductor/agent-dispatch.sh`; automated merge via
-  `conductor/worktree-merge.sh`. Autonomy + protected paths: `.claude/rules/07-autonomy.md`.
+- **Multi-agent**: parallel work is orchestrated by [koryph](https://koryph.build) from
+  the beads ready-graph — `/koryph-loop` for a wave, `/koryph-build` for a single bead;
+  config in `koryph.project.json`; the agent operating contract is `AGENTS.md`. Autonomy
+  + protected paths: `.claude/rules/07-autonomy.md`.
 
 ## Refinement iterations
 
@@ -133,10 +135,10 @@ Score against the relevant rubric (`docs/plans/rubric.md`). Target >= 90/100 bef
 - Prefer **reading one doc** cited in the task table over globbing. See
   `.claude/rules/03-context-mgmt.md`.
 - Delegate bulk research and large tool output to subagents with the right model tier:
-  - **Opus** for architecture/strategy (`architect`, `rebac-modeler`).
+  - **Opus** for architecture/strategy (`koryph-architect`, `rebac-modeler`).
   - **Sonnet** for implementation (`implementer`, `crd-author`, `controller-author`,
-    `olm-author`, `infra-bootstrap`, `guardrail-author`, `test-engineer`, `plan-scorer`,
-    `security-reviewer`).
-  - **Haiku** for narrow lookup (`explorer`, `debugger` investigations).
+    `olm-author`, `infra-bootstrap`, `guardrail-author`, `koryph-test-engineer`,
+    `koryph-plan-scorer`, `koryph-security-reviewer`).
+  - **Haiku** for narrow lookup (`koryph-explorer`, `koryph-debugger` investigations).
 - Long command outputs go to `.plan-logs/` via helper scripts; reference by path.
 - Do not mutate this file mid-task; cache warmth depends on its stability.
