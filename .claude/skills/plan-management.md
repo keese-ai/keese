@@ -14,7 +14,12 @@ model: sonnet
 
 ## When to use
 
-Creating or revising a `docs/plans/phase-*.md` file, or running the rubric loop.
+Scoring a design/plan doc against the rubric with `/score-plan`. New dispatchable work is
+filed as a **bead** (`/koryph-issue` for one item, `/koryph-plan` to decompose a whole design
+doc) — see [`AGENTS.md`](../../AGENTS.md), not as a new `docs/plans/phase-*.md` file. This
+skill's phase-file shape and scoring loop remain relevant for authoring/reviewing design docs
+themselves and for the existing historical `docs/plans/**` corpus; they no longer describe how
+work gets scheduled (that's koryph's `bd`-driven scheduler now).
 
 ## Inputs
 
